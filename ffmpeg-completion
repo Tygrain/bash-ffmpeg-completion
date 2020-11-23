@@ -1,0 +1,65 @@
+#!/bin/bash
+
+_ffmpeg()
+{
+  local cur prev ffsubstitutions
+  _get_comp_words_by_ref -n ':' cur prev
+  ffsubstitutions="${HOME}/.config/ffsubstitutions"
+
+  if [ -n "$cur" ] && [ "${cur:0:1}" = "@" ]; then
+    [ -f "${ffsubstitutions}/${cur:1}" ] && \
+      COMPREPLY=( "$(cat "${ffsubstitutions}/${cur:1}")" )
+  elif [ -n "$prev" ] && [ "${prev:0:1}" = "-" ]; then
+    case "$prev" in
+      -acodec|-c:a)
+        COMPREPLY=( $(compgen -W "$(ffmpeg -encoders -hide_banner | grep -Eo '^\sA[.A-Z]+\s[a-zA-Z0-9_]+\b' | cut -d  -f 3)" -- "$cur") ) ;;
+      -vcodec|-c:v)
+        COMPREPLY=( $(compgen -W "$(ffmpeg -encoders -hide_banner | grep -Eo '^\sV[.A-Z]+\s[a-zA-Z0-9_]+\b' | cut -d' '  -f 3)" -- "$cur") ) ;;
+      -pix_fmt)
+        COMPREPLY=( $(compgen -W "$(ffmpeg -pix_fmts -hide_banner | grep -Eo '^[.A-Z]+\s[a-z0-9_]+\b' | cut -d' ' -f 2)" -- "$cur") ) ;;
+      -preset)
+        COMPREPLY=( $(compgen -W "ultrafast superfast veryfast faster fast medium slow slower veryslow placebo" -- "$cur") ) ;;
+      -vprofile|-profile:v)
+        COMPREPLY=( $(compgen -W "baseline main high high10 high422 high444" -- "$cur") ) ;;
+      -f)
+        COMPREPLY=( $(compgen -W "3gp aac ac3 amr ass avi dvd flac flv gif gif_pipe h261 h263 h264 m4v webm mgsts microdvd mjpeg mov mov mp4 m4a 3gp 3g2 mj2 mp2 mp3 mp4 mpeg mpeg1video mpeg2video mpegts mpegtsraw mpegvideo mpjpeg null oga ogg rawvideo rtp rtp_mpegts rtsp vpk wav wc3movie webm webm_chunk webm_dash_manifest webp webp_pipe" -- "$cur") ) ;;
+      -h|-\?|-help|--help)
+        COMPREPLY=( $(compgen -W "long full decoder= encoder= demuxer= muxer= filter=" -- "$cur") ) ;;
+      -loglevel)
+        COMPREPLY=( $(compgen -W "quiet panic fatal error warning info verbose debug trace" -- "$cur") ) ;;
+    esac
+  elif [ -n "$cur" ] && [ "${cur:0:1}" = "-" ]; then
+    COMPREPLY=( $(compgen -W "$(ffmpeg -h -hide_banner | grep -Eo '^\s*(-[a-zA-Z_-]+)\b')" -- "$cur") )
+  fi
+}
+
+ffmpeg-macros-ci(){
+  local help ffsubstitutions name
+  help="Usage: ffmpeg-macros-ci command macroname\n \
+  add - add new macro\n \
+  remove - remove macro"
+  if [[ -z "$1" || -z "$2" ]]; then
+    echo -e "$help"
+    return 2
+  fi
+  ffsubstitutions="${HOME}/.config/ffsubstitutions"
+  name="$2"
+  case "$1" in
+    add )
+      [ -d "$ffsubstitutions" ] || mkdir -p "$ffsubstitutions"
+      local ffsubstitution name
+      echo "New macro: @${name}"
+      read -p "Enter substitution text: " ffsubstitution
+      echo -n "$ffsubstitution" > "${ffsubstitutions}/${name}"
+      [ -f "${ffsubstitutions}/${name}" ] && echo "Macro @${name} added to ${ffsubstitutions}/${name}"
+      ;;
+    remove )
+      local name
+      rm "${ffsubstitutions}/${name}" && echo "@${name} macro removed"
+      ;;
+  esac
+
+}
+
+export -f ffmpeg-macros-ci
+complete -o default -F _ffmpeg ffmpeg

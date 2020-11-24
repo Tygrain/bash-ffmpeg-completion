@@ -62,4 +62,4 @@ ffmpeg-macros-ci(){
 }
 
 export -f ffmpeg-macros-ci
-complete -o default -F _ffmpeg ffmpeg
+complete -o default -F _ffmpeg ffmpeg ffplay

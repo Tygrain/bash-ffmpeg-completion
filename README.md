@@ -2,6 +2,18 @@
 
 Bash completion support and custom macro substitution for ffmpeg options.
 
+Check that **bash-сompletion** is connected to your shell before installing
+```sh
+$ complete -p
+complete -F _longopt mv
+complete -F _root_command gksudo
+complete -F _command nice
+complete -F _longopt tr
+complete -F _longopt head
+complete -F _longopt sha256sum
+...
+```
+if you encounter any errors, then use the installation instructions **bash-сompletion** for your system and only then proceed with the installation.
 ### Installation
 Global:
 ```sh

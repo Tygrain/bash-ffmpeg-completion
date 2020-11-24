@@ -19,7 +19,7 @@ echo '    source $HOME/bash_completion.d/ffmpeg-completion' >> ~/.bashrc
 echo "fi" >> ~/.bashrc
 ```
 ### Usage
-![list ffmpeg's options](https://tygrain.github.io/master/images/ffmpeg-options-min.gif)
+![list ffmpeg's options](https://tygrain.github.io/images/ffmpeg-options-min.gif)
 To complete option:
 ```sh
 $ ffmpeg -i in.mp4 -cod[TAB]
@@ -29,7 +29,7 @@ To list ffmpeg's options:
 ```sh
 $ ffmpeg -[TAB][TAB]
 ```
-![to complete video or audio codec](https://tygrain.github.io/master/images/ffmpeg-codecs-min.gif)
+![to complete video or audio codec](https://tygrain.github.io/images/ffmpeg-codecs-min.gif)
 To complete video or audio codec:
 ```sh
 $ ffmpeg -i in.mp4 -c:v libx[TAB]
@@ -43,7 +43,7 @@ a64multi5        gif              libwebp_anim     pbm              tiff
 ...
 ```
 #### Custom parameter substitutions
-![parameter substitution](https://tygrain.github.io/master/images/ffmpeg-macros-min.gif)
+![parameter substitution](https://tygrain.github.io/master/ffmpeg-macros-min.gif)
 Create new substitution:
 ```sh
 ffmpeg-macros-ci add macroname

@@ -20,7 +20,9 @@ echo "fi" >> ~/.bashrc
 ```
 ### Usage
 To complete option:
+
 ![list ffmpeg's options](https://tygrain.github.io/images/ffmpeg-options-min.gif)
+
 ```sh
 $ ffmpeg -i in.mp4 -cod[TAB]
 -codec   -codecs  -colors
@@ -30,7 +32,9 @@ To list ffmpeg's options:
 $ ffmpeg -[TAB][TAB]
 ```
 To complete video or audio codec:
+
 ![to complete video or audio codec](https://tygrain.github.io/images/ffmpeg-codecs-min.gif)
+
 ```sh
 $ ffmpeg -i in.mp4 -c:v libx[TAB]
 libx264     libx264rgb  libx265     libxvid
@@ -43,7 +47,8 @@ a64multi5        gif              libwebp_anim     pbm              tiff
 ...
 ```
 #### Custom parameter substitutions
-![parameter substitution](https://tygrain.github.io/master/ffmpeg-macros-min.gif)
+
+![parameter substitution](https://tygrain.github.io/images/ffmpeg-macros-min.gif)
 
 Create new substitution:
 ```sh
